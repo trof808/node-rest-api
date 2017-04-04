@@ -21,6 +21,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'test')));
 
 
 // catch 404 and forward to error handler
@@ -35,15 +36,16 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
+  res.locals.showTests = req.query.test === '1';
   // render the error page
   res.status(err.status || 500);
   res.render('error');
 });
 
-app.use(function(req, res, next) {
-  res.locals.showTests = app.get('env') !== 'production' && req.query.test === '1';
-  next();
-});
+//using tests
+// app.use(function(req, res, next) {
+//   res.locals.showTests = (req.app.get('env') !== 'production' && req.query.test === '1') ? true : false;
+//   next();
+// });
 
 module.exports = app;

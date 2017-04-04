@@ -1,5 +1,8 @@
 module.exports = (app, db) => {
     app.get('/', (req, res) => {
-        res.render('index');
+        let options = {
+            title: 'NODE REST API'
+        };
+        res.render('index', {options: options});
     });
 };

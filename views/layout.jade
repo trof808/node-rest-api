@@ -3,5 +3,24 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
+    if showTests
+      link(rel='stylesheet', href='/vendor/mocha.css')
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js")
   body
     block content
+
+    if showTests
+      div#mocha
+      script(src="/vendor/mocha.js")
+      script(src="/vendor/chai.js")
+      script(type='text/javascript').
+        mocha.ui('tdd');
+        let assert = chai.assert;
+      script(src="tests-global.js")
+      if pageTestScript
+        script(src="#{pageTestScript}")
+      script(type='text/javascript').
+        mocha.checkLeaks();
+        mocha.globals(['jQuery']);
+        mocha.run();
+
