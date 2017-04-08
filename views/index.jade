@@ -1,5 +1,11 @@
 extends layout
 
 block content
+  if error
+    p #{error}
   h1= options.title
   p Welcome to #{options.title}
+  for item in options.users
+    div.item
+      a(href="/users/#{item.username}") #{item.username} <br>
+      span #{item.email}
